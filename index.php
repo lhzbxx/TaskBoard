@@ -123,37 +123,6 @@
 		a.state5 {
 			background-color: #000000;
 		}
-		div#layer1
-		{
-			width:100px;
-			height:100px;
-			background:yellow;
-			transition-property:width 1s linear 2s;
-			/* Firefox 4 */
-			-moz-transition:width 1s linear 2s;
-			/* Safari and Chrome */
-			-webkit-transition:width 1s linear 2s;
-			/* Opera */
-			-o-transition:width 1s linear 2s;
-		}
-		div:hover
-		{
-			width:200px;
-		}
-		#layer1 .visiable {
-			animation: popModel 1s;
-			-moz-animation: popModel 1s;	/* Firefox */
-			-webkit-animation: popModel 1s;	/* Safari 和 Chrome */
-			-o-animation: popModel 1s;	/* Opera */
-			background: rgba(0,0,0,0.5);
-			top: 0em;
-			left: 0em;
-			width: 100%;
-			height: 100%;
-			position: fixed;
-			display: block;
-			z-index: 1000;
-		}
 		@keyframes popModel
 		{
 			from {background: rgba(0, 0, 0, 0);}
@@ -178,13 +147,114 @@
 			box-shadow: 10px 10px 5px #888888;
 			z-index: 1001;
 		}
+		input[type="text"] {
+			-webkit-box-sizing: border-box;
+			-moz-box-sizing: border-box;
+			box-sizing: border-box;
+			width: 100%;
+			height: -webkit-calc(3em + 2px);
+			height: calc(3em + 2px);
+			margin: 0 0 1em;
+			padding: 1em;
+			border: 1px solid #cccccc;
+			border-radius: 1.5em;
+			background: #fff;
+			resize: none;
+			outline: none;
+		}
+		input[type="text"][required]:focus {
+			border-color: #00bafa;
+		}
+		input[type="text"][required]:focus + label[placeholder]:before {
+			color: #00bafa;
+		}
+		input[type="text"][required]:focus + label[placeholder]:before,
+		input[type="text"][required]:valid + label[placeholder]:before {
+			-webkit-transition-duration: .2s;
+			transition-duration: .2s;
+			-webkit-transform: translate(0, -1.5em) scale(0.9, 0.9);
+			-ms-transform: translate(0, -1.5em) scale(0.9, 0.9);
+			transform: translate(0, -1.5em) scale(0.9, 0.9);
+		}
+		input[type="text"][required]:invalid + label[placeholder][alt]:before {
+			content: attr(alt);
+		}
+		input[type="text"][required] + label[placeholder] {
+			display: block;
+			pointer-events: none;
+			line-height: 2.3em;
+			margin-top: -webkit-calc(-3em - 2px);
+			margin-top: calc(-3em - 2px);
+			margin-bottom: -webkit-calc((3em - 1em) + 2px);
+			margin-bottom: calc((3em - 1em) + 2px);
+		}
+		input[type="text"][required] + label[placeholder]:before {
+			content: attr(placeholder);
+			display: inline-block;
+			margin: 0 -webkit-calc(1em + 2px);
+			margin: 0 calc(1em + 2px);
+			padding: 0 2px;
+			color: #898989;
+			white-space: nowrap;
+			-webkit-transition: 0.3s ease-in-out;
+			transition: 0.3s ease-in-out;
+			background-image: -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#ffffff));
+			background-image: -webkit-linear-gradient(top, #ffffff, #ffffff);
+			background-image: linear-gradient(to bottom, #ffffff, #ffffff);
+			-webkit-background-size: 100% 5px;
+			background-size: 100% 5px;
+			background-repeat: no-repeat;
+			background-position: center;
+		}
+		.sendModel {
+			position: fixed;
+			left: 0px;
+			right: 0px;
+			margin-left: auto;
+			margin-right: auto;
+			margin-top: 150px;
+			width: 300px;
+			height: 200px;
+			background: white;
+			padding: 20px;
+			border: white;
+			box-shadow: 5px 5px 5px #888888;
+			display: none;
+		}
+		.sendModel input[type="submit"] {
+			padding: 10px 20px;
+			font-size: 20px;
+			margin: 0px auto;
+		}
 	</style>
 	<body>
-		<div id="layer1"></div>
-		<div class="Rd" id="layer2">
-			<div class="pq" id="33">分享新鲜事...</div>
-			<div id="content" role="textbox" contenteditable="plaintext-only" aria-labelledby="33">
-			</div>
+
+		<div id="addFriend" class="sendModel">
+			<form action="addFriend.php" method="post">
+				<input required type="text" name="name" placeholder="好友姓名"><br>
+				<input required type="submit">
+			</form>
+		</div>
+		<div id="addUpdate" class="sendModel">
+			<form action="addUpdate.php" method="post">
+				<input required type="text" name="name" placeholder="发布吐槽..."><br>
+				<input required type="submit">
+			</form>
+		</div>
+		<div id="addLibrary" class="sendModel">
+			<form action="addLibrary.php" method="post">
+				<input required type="text" name="name" placeholder="任务内容"><br>
+				<label alt='请输入名称' placeholder='名称'></label><br>
+				<input required type="text" pattern="0|[0-9]{4}-[0-9]{1,2}-[0-9]{1,2}" name="Deadline" placeholder="YYYY-MM-DD"><br>
+				<input required type="submit">
+			</form>
+		</div>
+		<div id="addTask" class="sendModel">
+			<form action="addTask.php" method="post">
+				<label alt='请输入名称' placeholder='名称'></label><br>
+				<input required type="text" pattern="0|[0-9]{4}-[0-9]{1,2}-[0-9]{1,2}" name="Deadline" placeholder="YYYY-MM-DD"><br>
+				<input required type="submit">
+			</form>
 		</div>
 		<div id="navigationDiv">
 			<ul>
@@ -197,7 +267,6 @@
 		<div id="operationDiv">
 			<span id="plusBtn">&plus;</span>
 		</div>
-
 		<?php
 			function remainTime($t) {
 				$r = $t - time();
@@ -236,7 +305,8 @@
 						if ($deadline == 0) {
 							echo '<a class="state4 TaskEntry">' . $row['entry'] . '<br><code>长期</code></a>';
 						} else {
-							if ($deadline - time() < 0) {
+							$r = $deadline - time();
+							if ($r < 0) {
 								echo '<a class="state5 TaskEntry">' . $row['entry'] . '<br><code>' . remainTime($row['deadline']) . '</code></a>';
 							} else {
 								if ($r < 60 * 60 * 24) {
@@ -270,7 +340,6 @@
 						if ($deadline == 0) {
 							echo '<a class="state4 LibraryEntry">' . $row['entry'] . '<br><code>长期</code></a>';
 						} else {
-							echo remainTime($row['deadline']);
 							if ($deadline - time() < 0) {
 								echo '<a class="state5 LibraryEntry">' . $row['entry'] . '<br><code>' . remainTime($row['deadline']) . '</code></a>';
 							} else {
@@ -296,6 +365,18 @@
 		</div>
 		<div id="UpdateDiv" class="Model">
 			<p class="headerP">动态</p>
+			<?php
+				$result = mysqli_query($con, 'SELECT * FROM log');
+				if ($result) {
+					while($row = mysqli_fetch_array($result)) {
+						if ($row['action'] == ":") {
+							echo '<a><code>' . $row['nickname'] . '</code><br><code>' . remainTime(2*time()-$row['createtime']) . '前</code><br><code>:</code><br>“' . $row['entry'] . '”</a>';
+						} else {
+							echo '<a><code>' . $row['nickname'] . '</code><br><code>' . remainTime(2*time()-$row['createtime']) . '前</code><br><code>' . $row['action'] . '</code><br>' . $row['entry'] . '</a>';
+						}
+					}
+				}
+			?>
 			<a><code>刘超</code><br><code>1天前</code><br><code>:</code><br>“SAP大作业真是太蛋疼了！”</a>
 			<a><code>刘超</code><br><code>1天前</code><br><code>-</code><br>SAP大作业</a>
 			<a><code>刘超</code><br><code>1天前</code><br><code>+</code><br>SAP大作业</a>
@@ -335,13 +416,13 @@
 			$("#plusBtn").click(function() {
 				var curr = $("#navigationDiv").data('current');
 				if (curr == "#TaskDiv") {
-					$("#layer1").toggleClass('visiable');
+					$("#addTask").slideToggle(200);
 				} else if (curr == "#UpdateDiv") {
-
+					$("#addUpdate").slideToggle(200);
 				} else if (curr == "#LibraryDiv") {
-
+					$("#addLibrary").slideToggle(200);
 				} else if (curr == "#FriendDiv") {
-
+					$("#addFriend").slideToggle(200);
 				} else {
 					return;
 				}
