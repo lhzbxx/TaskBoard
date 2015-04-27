@@ -123,8 +123,69 @@
 		a.state5 {
 			background-color: #000000;
 		}
+		div#layer1
+		{
+			width:100px;
+			height:100px;
+			background:yellow;
+			transition-property:width 1s linear 2s;
+			/* Firefox 4 */
+			-moz-transition:width 1s linear 2s;
+			/* Safari and Chrome */
+			-webkit-transition:width 1s linear 2s;
+			/* Opera */
+			-o-transition:width 1s linear 2s;
+		}
+		div:hover
+		{
+			width:200px;
+		}
+		#layer1 .visiable {
+			animation: popModel 1s;
+			-moz-animation: popModel 1s;	/* Firefox */
+			-webkit-animation: popModel 1s;	/* Safari 和 Chrome */
+			-o-animation: popModel 1s;	/* Opera */
+			background: rgba(0,0,0,0.5);
+			top: 0em;
+			left: 0em;
+			width: 100%;
+			height: 100%;
+			position: fixed;
+			display: block;
+			z-index: 1000;
+		}
+		@keyframes popModel
+		{
+			from {background: rgba(0, 0, 0, 0);}
+			to {background: rgba(0, 0, 0, 0.5);}
+		}
+		@-moz-keyframes popModel /* Firefox */
+		{
+			from {background: rgba(0, 0, 0, 0);}
+			to {background: rgba(0, 0, 0, 0.5);}
+		}
+		@-webkit-keyframes popModel /* Safari 和 Chrome */
+		{
+			from {background: rgba(0, 0, 0, 0);}
+			to {background: rgba(0, 0, 0, 0.5);}
+		}
+		@-o-keyframes popModel /* Opera */
+		{
+			from {background: rgba(0, 0, 0, 0);}
+			to {background: rgba(0, 0, 0, 0.5);}
+		}
+		#layer2 {
+			box-shadow: 10px 10px 5px #888888;
+			z-index: 1001;
+		}
 	</style>
 	<body>
+		<div id="layer1"></div>
+		<div class="Rd" id="layer2">
+			<div class="pq" id="33">分享新鲜事...</div>
+			<div id="content" role="textbox" contenteditable="plaintext-only" aria-labelledby="33">
+			</div>
+		</div>
 		<div id="navigationDiv">
 			<ul>
 				<li class="tabBtn" id="FriendDivBtn">Friend</li>
@@ -274,7 +335,7 @@
 			$("#plusBtn").click(function() {
 				var curr = $("#navigationDiv").data('current');
 				if (curr == "#TaskDiv") {
-
+					$("#layer1").toggleClass('visiable');
 				} else if (curr == "#UpdateDiv") {
 
 				} else if (curr == "#LibraryDiv") {
